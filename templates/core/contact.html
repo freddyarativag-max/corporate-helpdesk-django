@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block title %}Contacto{% endblock %}
+{% block public_content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="panel">
+        <h1 class="h3 mb-3">Contacto corporativo</h1>
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          <button class="btn btn-primary" type="submit"><i class="bi bi-send me-1"></i>Enviar mensaje</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

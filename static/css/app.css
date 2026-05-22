@@ -1,0 +1,38 @@
+:root {
+  --ink: #172033;
+  --muted: #627085;
+  --brand: #175cd3;
+  --brand-2: #0f766e;
+  --surface: #f6f8fb;
+  --line: #d9e1ec;
+}
+
+body { background: var(--surface); color: var(--ink); }
+.app-navbar { background: #10243f; }
+.app-shell { display: grid; grid-template-columns: 260px minmax(0, 1fr); min-height: calc(100vh - 56px); }
+.app-sidebar { background: #fff; border-right: 1px solid var(--line); padding: 18px 14px; position: sticky; top: 56px; height: calc(100vh - 56px); }
+.app-sidebar a { align-items: center; border-radius: 8px; color: #334155; display: flex; gap: 10px; padding: 10px 12px; text-decoration: none; }
+.app-sidebar a:hover { background: #eaf2ff; color: var(--brand); }
+.sidebar-title { color: var(--muted); font-size: .75rem; font-weight: 700; margin: 18px 12px 8px; text-transform: uppercase; }
+.app-content { padding: 28px; }
+.page-header { align-items: center; display: flex; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.stat-card { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 18px; }
+.stat-card .value { font-size: 2rem; font-weight: 750; line-height: 1; }
+.panel { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 18px; }
+.table thead th { color: var(--muted); font-size: .78rem; text-transform: uppercase; }
+.hero { background: linear-gradient(120deg, rgba(16,36,63,.94), rgba(15,118,110,.88)), url("https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1800&q=80") center/cover; color: #fff; min-height: 78vh; padding: 86px 0; }
+.hero h1 { font-size: clamp(2.2rem, 5vw, 4.6rem); font-weight: 800; letter-spacing: 0; }
+.hero p { color: #dbeafe; max-width: 720px; }
+.feature-band { background: #fff; padding: 54px 0; }
+.auth-wrap { align-items: center; background: linear-gradient(135deg, #10243f, #0f766e); display: flex; min-height: calc(100vh - 56px); padding: 32px 12px; }
+.auth-panel { background: #fff; border-radius: 8px; box-shadow: 0 24px 60px rgba(15, 23, 42, .24); margin: auto; max-width: 430px; padding: 30px; width: 100%; }
+.form-control, .form-select { border-radius: 8px; }
+.btn { border-radius: 8px; }
+footer { background: #10243f; color: #cbd5e1; padding: 28px 0; }
+
+@media (max-width: 900px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .app-sidebar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); height: auto; position: static; }
+  .app-content { padding: 18px; }
+  .page-header { align-items: flex-start; flex-direction: column; }
+}

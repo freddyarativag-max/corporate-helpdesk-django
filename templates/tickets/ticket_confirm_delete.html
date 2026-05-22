@@ -1,0 +1,2 @@
+{% extends "base.html" %}
+{% block content %}<div class="panel"><h1 class="h4">Eliminar ticket</h1><p>Confirma eliminar {{ object }}.</p><form method="post">{% csrf_token %}<button class="btn btn-danger">Eliminar</button><a class="btn btn-outline-secondary" href="{{ object.get_absolute_url }}">Cancelar</a></form></div>{% endblock %}

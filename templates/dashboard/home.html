@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div><h1 class="h3 mb-1">Dashboard de soporte</h1><p class="text-muted mb-0">Indicadores operativos y gestion por cliente, analista y prioridad.</p></div>
+  <form class="d-flex gap-2" method="get">
+    <input class="form-control" type="date" name="start">
+    <input class="form-control" type="date" name="end">
+    <button class="btn btn-primary"><i class="bi bi-funnel"></i></button>
+  </form>
+</div>
+<div class="row g-3 mb-3">
+  <div class="col-md-2"><div class="stat-card"><div class="value">{{ tickets_open }}</div><span>Abiertos</span></div></div>
+  <div class="col-md-2"><div class="stat-card"><div class="value">{{ tickets_closed }}</div><span>Cerrados</span></div></div>
+  <div class="col-md-2"><div class="stat-card"><div class="value">{{ tickets_critical }}</div><span>Criticos</span></div></div>
+  <div class="col-md-2"><div class="stat-card"><div class="value">{{ tickets_escalated }}</div><span>Escalados</span></div></div>
+  <div class="col-md-2"><div class="stat-card"><div class="value">{{ tickets_overdue }}</div><span>Vencidos</span></div></div>
+  <div class="col-md-2"><div class="stat-card"><div class="value">{{ avg_resolution }}</div><span>Dias promedio</span></div></div>
+</div>
+<div class="row g-3">
+  <div class="col-lg-6"><div class="panel"><h2 class="h5">Tickets por cliente</h2><canvas id="clientChart" height="160"></canvas></div></div>
+  <div class="col-lg-6"><div class="panel"><h2 class="h5">Tickets por analista</h2><canvas id="analystChart" height="160"></canvas></div></div>
+  <div class="col-12"><div class="panel"><h2 class="h5">Tickets recientes</h2>
+    <div class="table-responsive"><table class="table align-middle">
+      <thead><tr><th>Ticket</th><th>Cliente</th><th>Estado</th><th>Prioridad</th><th>Asignado</th></tr></thead>
+      <tbody>{% for ticket in recent_tickets %}<tr><td><a href="{{ ticket.get_absolute_url }}">{{ ticket.internal_number }}</a></td><td>{{ ticket.client }}</td><td>{{ ticket.status }}</td><td>{{ ticket.priority }}</td><td>{{ ticket.assigned_to }}</td></tr>{% empty %}<tr><td colspan="5">Sin tickets.</td></tr>{% endfor %}</tbody>
+    </table></div>
+  </div></div>
+</div>
+{{ by_client|json_script:"clients-data" }}
+{{ by_analyst|json_script:"analysts-data" }}
+{% endblock %}
+{% block scripts %}
+<script>
+  const clients = JSON.parse(document.getElementById('clients-data').textContent);
+  const analysts = JSON.parse(document.getElementById('analysts-data').textContent);
+  function makeChart(id, rows, labelKey) {
+    new Chart(document.getElementById(id), {
+      type: 'bar',
+      data: { labels: rows.map(r => r[labelKey] || 'Sin dato'), datasets: [{ label: 'Tickets', data: rows.map(r => r.total), backgroundColor: '#175cd3' }] },
+      options: { responsive: true, plugins: { legend: { display: false } } }
+    });
+  }
+  makeChart('clientChart', clients, 'client__name');
+  makeChart('analystChart', analysts, 'assigned_to__username');
+</script>
+{% endblock %}

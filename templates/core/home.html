@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Mesa de ayuda corporativa{% endblock %}
+{% block public_content %}
+<section class="hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <span class="badge text-bg-light mb-3">Help Desk / Service Desk</span>
+        <h1>Corporate Help Desk</h1>
+        <p class="lead">Gestiona solicitudes de soporte, escalamiento, seguimiento y reportes para clientes corporativos de ACL Analytics, HighBond, Robots, SAP Connector, Resolver, WRM, AX y otras lineas de negocio.</p>
+        <div class="d-flex flex-wrap gap-2 mt-4">
+          <a class="btn btn-light btn-lg" href="{% url 'accounts:login' %}">Ingresar al sistema</a>
+          <a class="btn btn-outline-light btn-lg" href="{% url 'core:contact' %}">Contactar soporte</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="feature-band">
+  <div class="container">
+    <div class="row g-3 mb-4">
+      <div class="col-md-3"><div class="stat-card"><div class="value">{{ open_tickets }}</div><div>Tickets abiertos</div></div></div>
+      <div class="col-md-3"><div class="stat-card"><div class="value">{{ closed_tickets }}</div><div>Tickets cerrados</div></div></div>
+      <div class="col-md-3"><div class="stat-card"><div class="value">{{ clients_count }}</div><div>Clientes con gestion</div></div></div>
+      <div class="col-md-3"><div class="stat-card"><div class="value">{{ critical_count }}</div><div>Casos criticos</div></div></div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4"><h5>Control integral</h5><p class="text-muted">Tickets, productos, prioridades, estados, escalados y responsables en un flujo trazable.</p></div>
+      <div class="col-md-4"><h5>Indicadores ejecutivos</h5><p class="text-muted">KPIs, graficas y reportes descargables para comites de servicio.</p></div>
+      <div class="col-md-4"><h5>Seguridad y roles</h5><p class="text-muted">Autenticacion Django, proteccion CSRF, permisos por perfil y panel administrativo.</p></div>
+    </div>
+  </div>
+</section>
+<footer><div class="container d-flex justify-content-between flex-wrap gap-2"><span>Corporate Help Desk</span><span>Plataforma de soporte tecnico empresarial</span></div></footer>
+{% endblock %}

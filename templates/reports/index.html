@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+  <div><h1 class="h3 mb-1">Reportes de gestion</h1><p class="text-muted mb-0">Indicadores mensuales, trimestrales y semestrales exportables.</p></div>
+  <div class="d-flex gap-2">
+    <a class="btn btn-outline-secondary" href="{% url 'reports:csv' %}?period={{ period }}">CSV</a>
+    <a class="btn btn-outline-secondary" href="{% url 'reports:excel' %}?period={{ period }}">Excel</a>
+    <a class="btn btn-outline-secondary" href="{% url 'reports:pdf' %}?period={{ period }}">PDF</a>
+  </div>
+</div>
+<div class="panel mb-3">
+  <form method="get" class="d-flex gap-2">
+    <select class="form-select" name="period">
+      <option value="mensual">Mensual</option>
+      <option value="trimestral">Trimestral</option>
+      <option value="semestral">Semestral</option>
+    </select>
+    <button class="btn btn-primary">Aplicar</button>
+  </form>
+</div>
+<div class="row g-3">
+  <div class="col-md-2"><div class="stat-card"><div class="value">{{ total }}</div><span>Total</span></div></div>
+  <div class="col-md-3"><div class="stat-card"><div class="value">{{ older_30|length }}</div><span>Abiertos > 30 dias</span></div></div>
+  <div class="col-md-2"><div class="stat-card"><div class="value">{{ critical.count }}</div><span>Criticos</span></div></div>
+  <div class="col-md-2"><div class="stat-card"><div class="value">{{ no_response.count }}</div><span>Sin respuesta</span></div></div>
+  <div class="col-md-3"><div class="stat-card"><div class="value">{{ negative.count }}</div><span>Feedback negativo</span></div></div>
+  <div class="col-lg-6"><div class="panel"><h2 class="h5">Comunicaciones por mes</h2><table class="table"><thead><tr><th>Mes</th><th>Tickets</th></tr></thead><tbody>{% for row in monthly %}<tr><td>{{ row.month|date:"Y-m" }}</td><td>{{ row.total }}</td></tr>{% empty %}<tr><td colspan="2">Sin datos.</td></tr>{% endfor %}</tbody></table></div></div>
+  <div class="col-lg-6"><div class="panel"><h2 class="h5">Nivel de madurez del cliente</h2><table class="table"><thead><tr><th>Madurez</th><th>Tickets</th></tr></thead><tbody>{% for row in by_maturity %}<tr><td>{{ row.client__maturity_level|default:"Sin clasificar" }}</td><td>{{ row.total }}</td></tr>{% empty %}<tr><td colspan="2">Sin datos.</td></tr>{% endfor %}</tbody></table></div></div>
+</div>
+{% endblock %}
